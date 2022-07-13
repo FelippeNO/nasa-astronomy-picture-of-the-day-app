@@ -5,5 +5,6 @@ class PictureOfTheDayEntity {
   final String url;
   final String title;
 
-  PictureOfTheDayEntity(this.date, this.explanation, this.hdurl, this.url, this.title);
+  PictureOfTheDayEntity(
+      {required this.date, required this.explanation, required this.hdurl, required this.url, required this.title});
 }
