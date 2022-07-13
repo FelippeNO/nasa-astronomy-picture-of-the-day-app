@@ -1,6 +1,7 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core/proxies/proxier.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core/ui/scale.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/proxies/proxy_picture_of_the_day_entity.dart';
 
@@ -18,7 +19,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Builder(builder: (BuildContext context) {
+        Scale.init(context);
+        return const MyHomePage(title: 'Flutter Demo Home Page');
+      }),
     );
   }
 }
