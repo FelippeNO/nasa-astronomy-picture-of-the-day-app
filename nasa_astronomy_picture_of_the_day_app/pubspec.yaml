@@ -43,6 +43,7 @@ dependencies:
   shared_preferences: ^2.0.15
   equatable: ^2.0.3
   cached_network_image: ^3.2.1
+  flutter_modular: ^5.0.3
 
 dev_dependencies:
   flutter_test:

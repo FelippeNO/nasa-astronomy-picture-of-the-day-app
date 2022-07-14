@@ -1,67 +1,25 @@
 import 'package:flutter/material.dart';
-import 'core/ui/scale.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'global_module.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Core());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
-      ),
-      home: Builder(builder: (BuildContext context) {
-        Scale.init(context);
-        return const MyHomePage(title: 'Flutter Demo Home Page');
-      }),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
+class Core extends StatelessWidget {
+  const Core({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+    return ModularApp(
+      module: GlobalModule(),
+      child: MaterialApp.router(
+        title: 'Nasa Astronomy Picture Of The Day',
+        theme: ThemeData(useMaterial3: true),
+        supportedLocales: const [Locale('en', '')],
+        routeInformationParser: Modular.routeInformationParser,
+        routerDelegate: Modular.routerDelegate,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

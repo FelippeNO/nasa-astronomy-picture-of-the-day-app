@@ -1,5 +1,5 @@
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/error/success.dart';
+import '../../domain/entities/picture_of_the_day_entity.dart';
+import '../../error/success.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ICoreSharedPreferences {

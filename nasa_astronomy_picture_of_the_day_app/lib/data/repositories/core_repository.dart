@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/data/gateways/core_gateway.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/i_repositories/i_core_repository.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/error/failures.dart';
+import '../gateways/core_gateway.dart';
+import '../../domain/entities/picture_of_the_day_entity.dart';
+import '../../domain/i_repositories/i_core_repository.dart';
+import '../../error/failures.dart';
 
 class CoreRepository implements ICoreRepository {
   final ICoreGateway _gateway;
