@@ -1,28 +1,29 @@
+import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core/core_http_client.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/data/gateways/core_gateway.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/proxies/proxy_picture_of_the_day_entity.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/error/exceptions.dart';
 
 class MockCoreHttpClient extends Mock implements CoreHttpClient {}
 
 void main() {
-  DateTime tStartDateTime = DateTime(2022, 06, 21);
+  DateTime tStartDateTime = DateTime(2022, 06, 29);
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   final String tFormattedDateTime = formatter.format(tStartDateTime);
-  late CoreHttpClient coreHttpClient;
+
+  late MockCoreHttpClient coreHttpClient;
   late CoreGateway coreGateway;
 
   setUp(() {
     coreHttpClient = MockCoreHttpClient();
-    coreGateway = CoreGateway();
+    coreGateway = CoreGateway(coreHttpClient);
   });
 
-  final List<Map<String, dynamic>> tPictureOfTheDayEntityJson = [
+  final List<Map<String, String>> tPictureOfTheDayEntityJson = [
     {
       "copyright": "Elena Pinna",
       "date": "2022-01-22",
@@ -38,14 +39,22 @@ void main() {
 
   group('CoreGateway.getImagesList', () {
     test('Should return a PictureOfTheDayEntity List on success', () async {
-      Uri tUri = coreHttpClient.httpClientUri(tFormattedDateTime);
-      tUri = coreHttpClient.httpClientUri(tFormattedDateTime);
-
-      when(() => coreHttpClient.get(tUri))
-          .thenAnswer((_) async => Response(tPictureOfTheDayEntityJson.toString(), 200));
-
-      final result = await coreGateway.getImagesList(startDate: tFormattedDateTime);
+      when(() => coreHttpClient.get(tFormattedDateTime))
+          .thenAnswer((_) async => http.Response(json.encode(tPictureOfTheDayEntityJson), 200));
+      final result = await coreGateway.getPicturesList(startDate: tFormattedDateTime);
       expect(result, isA<List<PictureOfTheDayEntity>>());
+      verify(() => coreHttpClient.get(tFormattedDateTime)).called(1);
+      verifyNoMoreInteractions(coreHttpClient);
+    });
+
+    test('Should throws a GetPicturesListException on failure', () async {
+      when(() => coreHttpClient.get(tFormattedDateTime)).thenAnswer((_) async => http.Response("", 418));
+
+      await expectLater(
+          coreGateway.getPicturesList(startDate: tFormattedDateTime), throwsA(isA<GetPicturesListException>()));
+
+      verify(() => coreHttpClient.get(tFormattedDateTime)).called(1);
+      verifyNoMoreInteractions(coreHttpClient);
     });
   });
 }

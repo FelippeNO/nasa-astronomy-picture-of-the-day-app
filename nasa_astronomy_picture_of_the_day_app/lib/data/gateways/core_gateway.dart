@@ -1,24 +1,32 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core/core_http_client.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
-import 'package:http/http.dart' as http;
-import 'dart:io';
-
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/proxies/proxy_picture_of_the_day_entity.dart';
+import '../../core/core_http_client.dart';
+import '../mappers/picture_of_the_day_mapper.dart';
+import '../../domain/entities/picture_of_the_day_entity.dart';
+import '../../error/exceptions.dart';
 
 abstract class ICoreGateway {
-  Future<List<PictureOfTheDayEntity>> getImagesList({required String startDate});
+  Future<List<PictureOfTheDayEntity>> getPicturesList({required String startDate});
 }
 
 class CoreGateway implements ICoreGateway {
+  final ICoreHttpClient _coreHttpClient;
+
+  CoreGateway(this._coreHttpClient);
+
   @override
-  Future<List<PictureOfTheDayEntity>> getImagesList({required String startDate}) async {
-    final imagesListUri = CoreHttpClient().httpClientUri(startDate);
-    debugPrint(imagesListUri.toString());
-    Response response = await CoreHttpClient().get(imagesListUri);
-    debugPrint(response.body);
-    // List<PictureOfTheDayEntity> list = ProxyPictureOfTheDayEntity.generateList();
-    // return list;
+  Future<List<PictureOfTheDayEntity>> getPicturesList({required String startDate}) async {
+    try {
+      Response response = await _coreHttpClient.get(startDate);
+      if (response.statusCode != 200) {
+        throw GetPicturesListException();
+      }
+      return List<PictureOfTheDayEntity>.from(
+          json.decode(response.body).map((data) => PictureOfTheDayMapper.fromJson(data)));
+    } catch (e) {
+      throw GetPicturesListException();
+    }
   }
 }

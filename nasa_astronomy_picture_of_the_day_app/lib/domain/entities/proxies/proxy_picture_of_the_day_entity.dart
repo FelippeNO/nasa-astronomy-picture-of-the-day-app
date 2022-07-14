@@ -1,4 +1,4 @@
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
+import '../picture_of_the_day_entity.dart';
 import '../../../../core/proxies/proxier.dart';
 
 class ProxyPictureOfTheDayEntity {

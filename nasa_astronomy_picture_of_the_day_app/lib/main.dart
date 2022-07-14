@@ -1,10 +1,11 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core/proxies/proxier.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core/ui/scale.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/data/gateways/core_gateway.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/proxies/proxy_picture_of_the_day_entity.dart';
+import 'core/core_http_client.dart';
+import 'core/proxies/proxier.dart';
+import 'core/ui/scale.dart';
+import 'data/gateways/core_gateway.dart';
+import 'domain/entities/picture_of_the_day_entity.dart';
+import 'domain/entities/proxies/proxy_picture_of_the_day_entity.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,7 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    PictureOfTheDayEntity picture = ProxyPictureOfTheDayEntity.generateSingle();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

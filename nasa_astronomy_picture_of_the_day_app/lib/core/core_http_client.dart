@@ -1,16 +1,17 @@
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
-class CoreHttpClient {
+abstract class ICoreHttpClient {
+  Future<Response> get(String startDate);
+}
+
+class CoreHttpClient implements ICoreHttpClient {
   static const String baseUrl = "https://api.nasa.gov/planetary/apod";
   static const String apiKey = "uu8DEr43eF20KKXHvgVZQJeIwvJa5903Ny71jnOy";
 
-  Uri httpClientUri(String startDate) {
+  @override
+  Future<Response> get(String startDate) async {
     final uri = Uri.parse("$baseUrl?api_key=$apiKey&start_date=$startDate");
-    return uri;
-  }
-
-  Future<Response> get(Uri uri) async {
     http.Response response = await http.get(uri);
     return response;
   }
