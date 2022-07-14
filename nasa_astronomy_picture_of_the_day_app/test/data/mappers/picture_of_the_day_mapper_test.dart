@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/data/mappers/picture_of_the_day_mapper.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/proxies/proxy_picture_of_the_day_entity.dart';
 
 void main() {
   final DateTime tDate = DateTime(2022, 01, 22);
