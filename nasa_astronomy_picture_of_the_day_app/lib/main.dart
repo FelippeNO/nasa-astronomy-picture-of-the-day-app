@@ -1,11 +1,5 @@
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'core/core_http_client.dart';
-import 'core/proxies/proxier.dart';
 import 'core/ui/scale.dart';
-import 'data/gateways/core_gateway.dart';
-import 'domain/entities/picture_of_the_day_entity.dart';
-import 'domain/entities/proxies/proxy_picture_of_the_day_entity.dart';
 
 void main() {
   runApp(const MyApp());

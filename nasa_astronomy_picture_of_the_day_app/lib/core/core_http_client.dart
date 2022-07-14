@@ -2,7 +2,8 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
 abstract class ICoreHttpClient {
-  Future<Response> get(String startDate);
+  Future<Response> getPicturesListFromDate(String startDate);
+  Future<Response> getPictureByDate(String date);
 }
 
 class CoreHttpClient implements ICoreHttpClient {
@@ -10,8 +11,15 @@ class CoreHttpClient implements ICoreHttpClient {
   static const String apiKey = "uu8DEr43eF20KKXHvgVZQJeIwvJa5903Ny71jnOy";
 
   @override
-  Future<Response> get(String startDate) async {
+  Future<Response> getPicturesListFromDate(String startDate) async {
     final uri = Uri.parse("$baseUrl?api_key=$apiKey&start_date=$startDate");
+    http.Response response = await http.get(uri);
+    return response;
+  }
+
+  @override
+  Future<Response> getPictureByDate(String date) async {
+    final uri = Uri.parse("$baseUrl?api_key=$apiKey&date=$date");
     http.Response response = await http.get(uri);
     return response;
   }

@@ -8,7 +8,8 @@ import '../../domain/entities/picture_of_the_day_entity.dart';
 import '../../error/exceptions.dart';
 
 abstract class ICoreGateway {
-  Future<List<PictureOfTheDayEntity>> getPicturesList({required String startDate});
+  Future<List<PictureOfTheDayEntity>> getPicturesListFromDate({required String startDate});
+  Future<PictureOfTheDayEntity> getPictureByDate({required String date});
 }
 
 class CoreGateway implements ICoreGateway {
@@ -17,9 +18,9 @@ class CoreGateway implements ICoreGateway {
   CoreGateway(this._coreHttpClient);
 
   @override
-  Future<List<PictureOfTheDayEntity>> getPicturesList({required String startDate}) async {
+  Future<List<PictureOfTheDayEntity>> getPicturesListFromDate({required String startDate}) async {
     try {
-      Response response = await _coreHttpClient.get(startDate);
+      Response response = await _coreHttpClient.getPicturesListFromDate(startDate);
       if (response.statusCode != 200) {
         throw GetPicturesListException();
       }
@@ -27,6 +28,19 @@ class CoreGateway implements ICoreGateway {
           json.decode(response.body).map((data) => PictureOfTheDayMapper.fromJson(data)));
     } catch (e) {
       throw GetPicturesListException();
+    }
+  }
+
+  @override
+  Future<PictureOfTheDayEntity> getPictureByDate({required String date}) async {
+    try {
+      Response response = await _coreHttpClient.getPictureByDate(date);
+      if (response.statusCode != 200) {
+        throw GetPictureOfTheDayException();
+      }
+      return PictureOfTheDayMapper.fromJson(json.decode(response.body));
+    } catch (e) {
+      throw GetPictureOfTheDayException();
     }
   }
 }
