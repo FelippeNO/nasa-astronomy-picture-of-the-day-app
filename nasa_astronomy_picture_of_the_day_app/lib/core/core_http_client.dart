@@ -7,19 +7,19 @@ abstract class ICoreHttpClient {
 }
 
 class CoreHttpClient implements ICoreHttpClient {
-  static const String baseUrl = "https://api.nasa.gov/planetary/apod";
-  static const String apiKey = "uu8DEr43eF20KKXHvgVZQJeIwvJa5903Ny71jnOy";
+  static const String _baseUrl = "https://api.nasa.gov/planetary/apod";
+  static const String _apiKey = "uu8DEr43eF20KKXHvgVZQJeIwvJa5903Ny71jnOy";
 
   @override
   Future<Response> getPicturesListFromDate(String startDate) async {
-    final uri = Uri.parse("$baseUrl?api_key=$apiKey&start_date=$startDate");
+    final uri = Uri.parse("$_baseUrl?api_key=$_apiKey&start_date=$startDate");
     http.Response response = await http.get(uri);
     return response;
   }
 
   @override
   Future<Response> getPictureByDate(String date) async {
-    final uri = Uri.parse("$baseUrl?api_key=$apiKey&date=$date");
+    final uri = Uri.parse("$_baseUrl?api_key=$_apiKey&date=$date");
     http.Response response = await http.get(uri);
     return response;
   }
