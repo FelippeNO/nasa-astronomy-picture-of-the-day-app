@@ -11,9 +11,9 @@ class CoreRepository implements ICoreRepository {
   CoreRepository(this._gateway);
 
   @override
-  Future<Either<CoreFailure, List<PictureOfTheDayEntity>>> getPicturesListFromDate({required String startDate}) async {
+  Future<Either<CoreFailure, List<PictureEntity>>> getPicturesListFromDate({required String startDate}) async {
     try {
-      final List<PictureOfTheDayEntity> gatewayResult = await _gateway.getPicturesListFromDate(startDate: startDate);
+      final List<PictureEntity> gatewayResult = await _gateway.getPicturesListFromDate(startDate: startDate);
       return Right(gatewayResult);
     } on Exception {
       return Left(GetPicturesListFromDateFailure());

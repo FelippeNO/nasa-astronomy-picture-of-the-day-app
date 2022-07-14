@@ -16,7 +16,7 @@ void main() {
   late final ICoreRepository repository;
 
   const String tStartDate = "2022-06-01";
-  final List<PictureOfTheDayEntity> tPictureOfTheDayList = ProxyPictureOfTheDayEntity.generateList();
+  final List<PictureEntity> tPictureOfTheDayList = ProxyPictureEntity.generateList();
 
   setUpAll(() {
     gateway = MockCoreGateway();

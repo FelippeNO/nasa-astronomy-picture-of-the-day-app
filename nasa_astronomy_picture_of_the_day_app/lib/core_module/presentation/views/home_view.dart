@@ -27,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
       body: ValueListenableBuilder<bool>(
           valueListenable: homeViewController.isListLoaded,
           builder: (context, value, _) {
-            return ValueListenableBuilder<List<PictureOfTheDayEntity>>(
+            return ValueListenableBuilder<List<PictureEntity>>(
                 valueListenable: homeViewController.pictureOfTheDayList,
                 builder: (context, list, _) {
                   {

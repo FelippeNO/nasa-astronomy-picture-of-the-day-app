@@ -5,19 +5,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class ICoreSharedPreferences {
   Future<CoreSuccess> savePictureOfTheDayList({required String data});
   Future<CoreSuccess> savePictureOfTheDay({required String date, required String data});
-  Future<List<PictureOfTheDayEntity>> getPictureOfTheDayList();
-  Future<PictureOfTheDayEntity> getPictureOfTheDay({required String date});
+  Future<List<PictureEntity>> getPictureOfTheDayList();
+  Future<PictureEntity> getPictureOfTheDay({required String date});
 }
 
 class CoreSharedPreferences implements ICoreSharedPreferences {
   @override
-  Future<PictureOfTheDayEntity> getPictureOfTheDay({required String date}) async {
+  Future<PictureEntity> getPictureOfTheDay({required String date}) async {
     // TODO: implement getPictureOfTheDay
     throw UnimplementedError();
   }
 
   @override
-  Future<List<PictureOfTheDayEntity>> getPictureOfTheDayList() async {
+  Future<List<PictureEntity>> getPictureOfTheDayList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString("pictures/") == null) {}
 

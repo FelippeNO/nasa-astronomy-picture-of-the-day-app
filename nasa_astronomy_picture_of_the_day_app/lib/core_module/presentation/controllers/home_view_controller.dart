@@ -8,16 +8,16 @@ class HomeViewController extends ChangeNotifier {
 
   HomeViewController(this._getPicturesOfTheDayListFromDateService);
 
-  ValueNotifier<List<PictureOfTheDayEntity>> pictureOfTheDayList = ValueNotifier([]);
+  ValueNotifier<List<PictureEntity>> pictureOfTheDayList = ValueNotifier([]);
   ValueNotifier<bool> isListLoaded = ValueNotifier(false);
 
   void initialize() async {
     final serviceRequest = await _getPicturesOfTheDayListFromDateService.call(startDate: "2022-06-25");
     final result = serviceRequest.fold((l) => l, (r) => r);
-    if (result is List<PictureOfTheDayEntity>) {
+    if (result is List<PictureEntity>) {
       pictureOfTheDayList.value = result;
     } else {
-      throw CoreException(StackTrace.empty, "impossivel fold", Exception);
+      throw CoreException(StackTrace.empty, "Couldn't get Pictures Of The Day List", Exception);
     }
     notifyListeners();
   }

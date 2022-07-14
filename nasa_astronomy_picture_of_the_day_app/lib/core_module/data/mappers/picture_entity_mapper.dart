@@ -3,10 +3,10 @@ import 'package:intl/intl.dart';
 import '../../domain/entities/picture_of_the_day_entity.dart';
 import '../../error/exceptions.dart';
 
-class PictureOfTheDayMapper {
-  static PictureOfTheDayEntity fromJson(Map<String, dynamic> json) {
+class PictureEntityMapper {
+  static PictureEntity fromJson(Map<String, dynamic> json) {
     try {
-      return PictureOfTheDayEntity(
+      return PictureEntity(
         date: DateTime.parse(json['date']),
         title: json['title'],
         explanation: json['explanation'],
@@ -18,7 +18,7 @@ class PictureOfTheDayMapper {
     }
   }
 
-  static Map<String, dynamic> toJson(PictureOfTheDayEntity picture) {
+  static Map<String, dynamic> toJson(PictureEntity picture) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
     final Map<String, String> data = <String, String>{};

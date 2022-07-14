@@ -8,6 +8,6 @@ class GetPicturesOfTheDayListFromDateService {
 
   GetPicturesOfTheDayListFromDateService(this._repository);
 
-  Future<Either<CoreFailure, List<PictureOfTheDayEntity>>> call({required String startDate}) async =>
+  Future<Either<CoreFailure, List<PictureEntity>>> call({required String startDate}) async =>
       await _repository.getPicturesListFromDate(startDate: startDate);
 }

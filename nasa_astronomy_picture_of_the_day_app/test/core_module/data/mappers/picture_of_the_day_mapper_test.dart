@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/mappers/picture_of_the_day_mapper.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_of_the_day_entity.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/mappers/picture_entity_mapper.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/mappers/picture_entity_mapper.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
 
 void main() {
   final DateTime tDate = DateTime(2022, 01, 22);
@@ -13,8 +14,8 @@ void main() {
   const String tUrl = "https://apod.nasa.gov/apod/image/2201/IMG_4039copia2_1024.jpg";
   const String tHdurl = "https://apod.nasa.gov/apod/image/2201/IMG_4039copia2_2048.jpg";
 
-  PictureOfTheDayEntity tPicture =
-      PictureOfTheDayEntity(date: tDate, explanation: tExplanation, title: tTitle, url: tUrl, hdurl: tHdurl);
+  PictureEntity tPicture =
+      PictureEntity(date: tDate, explanation: tExplanation, title: tTitle, url: tUrl, hdurl: tHdurl);
 
   final Map<String, String> tPictureOfTheDayEntityJson = {
     "copyright": "Elena Pinna",
@@ -29,7 +30,7 @@ void main() {
   };
 
   test('pictureCreated should be generated with the same attributes as tPicture', () {
-    final pictureCreated = PictureOfTheDayMapper.fromJson(tPictureOfTheDayEntityJson);
+    final pictureCreated = PictureEntityMapper.fromJson(tPictureOfTheDayEntityJson);
 
     expect(tPicture.date, pictureCreated.date);
     expect(tPicture.title, pictureCreated.title);

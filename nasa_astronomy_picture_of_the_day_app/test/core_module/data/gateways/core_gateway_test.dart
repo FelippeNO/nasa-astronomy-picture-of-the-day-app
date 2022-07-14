@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/gateways/core_gateway.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_of_the_day_entity.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/exceptions.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/network/core_http_client.dart';
 
@@ -54,7 +54,7 @@ void main() {
       when(() => coreHttpClient.getPicturesListFromDate(tFormattedDateTime))
           .thenAnswer((_) async => http.Response(json.encode(tPictureOfTheDayEntityJsonList), 200));
       final result = await coreGateway.getPicturesListFromDate(startDate: tFormattedDateTime);
-      expect(result, isA<List<PictureOfTheDayEntity>>());
+      expect(result, isA<List<PictureEntity>>());
       verify(() => coreHttpClient.getPicturesListFromDate(tFormattedDateTime)).called(1);
       verifyNoMoreInteractions(coreHttpClient);
     });
@@ -76,7 +76,7 @@ void main() {
       when(() => coreHttpClient.getPictureByDate(tFormattedDateTime))
           .thenAnswer((_) async => http.Response(json.encode(tPictureOfTheDayEntityJson), 200));
       final result = await coreGateway.getPictureByDate(date: tFormattedDateTime);
-      expect(result, isA<PictureOfTheDayEntity>());
+      expect(result, isA<PictureEntity>());
       verify(() => coreHttpClient.getPictureByDate(tFormattedDateTime)).called(1);
       verifyNoMoreInteractions(coreHttpClient);
     });
