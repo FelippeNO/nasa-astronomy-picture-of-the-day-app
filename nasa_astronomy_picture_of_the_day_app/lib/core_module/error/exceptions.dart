@@ -10,10 +10,10 @@ class JSONParserException extends CoreException {
   JSONParserException(super.stackTrace, super.label, super.exception);
 }
 
-class GetPicturesListException extends CoreException {
-  GetPicturesListException(super.stackTrace, super.label, super.exception);
+class GetPicturesException extends CoreException {
+  GetPicturesException(super.stackTrace, super.label, super.exception);
 }
 
-class GetPictureOfTheDayException extends CoreException {
-  GetPictureOfTheDayException(super.stackTrace, super.label, super.exception);
+class GetPictureException extends CoreException {
+  GetPictureException(super.stackTrace, super.label, super.exception);
 }

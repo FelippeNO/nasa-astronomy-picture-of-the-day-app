@@ -50,29 +50,29 @@ void main() {
   };
 
   group('CoreGateway.getPicturesListFromDate', () {
-    test('Should return a PictureOfTheDayEntity List on success', () async {
-      when(() => coreHttpClient.getPicturesListFromDate(tFormattedDateTime))
+    test('Should return a PictureEntity List on success', () async {
+      when(() => coreHttpClient.getPicturesFromDate(tFormattedDateTime))
           .thenAnswer((_) async => http.Response(json.encode(tPictureOfTheDayEntityJsonList), 200));
-      final result = await coreGateway.getPicturesListFromDate(startDate: tFormattedDateTime);
+      final result = await coreGateway.getPicturesFromDate(startDate: tFormattedDateTime);
       expect(result, isA<List<PictureEntity>>());
-      verify(() => coreHttpClient.getPicturesListFromDate(tFormattedDateTime)).called(1);
+      verify(() => coreHttpClient.getPicturesFromDate(tFormattedDateTime)).called(1);
       verifyNoMoreInteractions(coreHttpClient);
     });
 
-    test('Should throws a GetPicturesListException on failure', () async {
-      when(() => coreHttpClient.getPicturesListFromDate(tFormattedDateTime))
+    test('Should throws a GetPicturesException on failure', () async {
+      when(() => coreHttpClient.getPicturesFromDate(tFormattedDateTime))
           .thenAnswer((_) async => http.Response("", 418));
 
       await expectLater(
-          coreGateway.getPicturesListFromDate(startDate: tFormattedDateTime), throwsA(isA<GetPicturesListException>()));
+          coreGateway.getPicturesFromDate(startDate: tFormattedDateTime), throwsA(isA<GetPicturesException>()));
 
-      verify(() => coreHttpClient.getPicturesListFromDate(tFormattedDateTime)).called(1);
+      verify(() => coreHttpClient.getPicturesFromDate(tFormattedDateTime)).called(1);
       verifyNoMoreInteractions(coreHttpClient);
     });
   });
 
   group('CoreGateway.getPictureByDate', () {
-    test('Should return a PictureOfTheDay on success', () async {
+    test('Should return a PictureEntity on success', () async {
       when(() => coreHttpClient.getPictureByDate(tFormattedDateTime))
           .thenAnswer((_) async => http.Response(json.encode(tPictureOfTheDayEntityJson), 200));
       final result = await coreGateway.getPictureByDate(date: tFormattedDateTime);
@@ -81,11 +81,10 @@ void main() {
       verifyNoMoreInteractions(coreHttpClient);
     });
 
-    test('Should throws a GetPictureOfTheDayException on failure', () async {
+    test('Should throws a GetPictureException on failure', () async {
       when(() => coreHttpClient.getPictureByDate(tFormattedDateTime)).thenAnswer((_) async => http.Response("", 418));
 
-      await expectLater(
-          coreGateway.getPictureByDate(date: tFormattedDateTime), throwsA(isA<GetPictureOfTheDayException>()));
+      await expectLater(coreGateway.getPictureByDate(date: tFormattedDateTime), throwsA(isA<GetPictureException>()));
 
       verify(() => coreHttpClient.getPictureByDate(tFormattedDateTime)).called(1);
       verifyNoMoreInteractions(coreHttpClient);

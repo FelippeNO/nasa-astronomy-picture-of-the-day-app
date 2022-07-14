@@ -5,6 +5,11 @@ class PictureEntity {
   final String explanation;
   final String hdurl;
 
-  PictureEntity(
-      {required this.date, required this.explanation, required this.hdurl, required this.url, required this.title});
+  PictureEntity({
+    required this.date,
+    required this.explanation,
+    required this.hdurl,
+    required this.url,
+    required this.title,
+  });
 }

@@ -1,11 +1,11 @@
-import '../../domain/entities/picture_of_the_day_entity.dart';
+import '../../domain/entities/picture_entity.dart';
 import '../../error/success.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ICoreSharedPreferences {
-  Future<CoreSuccess> savePictureOfTheDayList({required String data});
+  Future<CoreSuccess> savePictures({required String data});
   Future<CoreSuccess> savePictureOfTheDay({required String date, required String data});
-  Future<List<PictureEntity>> getPictureOfTheDayList();
+  Future<List<PictureEntity>> getPictures();
   Future<PictureEntity> getPictureOfTheDay({required String date});
 }
 
@@ -17,7 +17,7 @@ class CoreSharedPreferences implements ICoreSharedPreferences {
   }
 
   @override
-  Future<List<PictureEntity>> getPictureOfTheDayList() async {
+  Future<List<PictureEntity>> getPictures() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString("pictures/") == null) {}
 
@@ -32,7 +32,7 @@ class CoreSharedPreferences implements ICoreSharedPreferences {
   }
 
   @override
-  Future<CoreSuccess> savePictureOfTheDayList({required String data}) async {
+  Future<CoreSuccess> savePictures({required String data}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("pictures/", data);
     print(data);

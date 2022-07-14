@@ -5,4 +5,4 @@ class CoreFailure extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetPicturesListFromDateFailure extends CoreFailure {}
+class GetPicturesFromDateFailure extends CoreFailure {}

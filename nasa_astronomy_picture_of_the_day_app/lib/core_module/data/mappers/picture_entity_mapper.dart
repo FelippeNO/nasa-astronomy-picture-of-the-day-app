@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-import '../../domain/entities/picture_of_the_day_entity.dart';
+import '../../domain/entities/picture_entity.dart';
 import '../../error/exceptions.dart';
 
 class PictureEntityMapper {

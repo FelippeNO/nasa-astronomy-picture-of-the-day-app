@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../domain/entities/picture_of_the_day_entity.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/ui/scale.dart';
+import '../../domain/entities/picture_entity.dart';
 import '../controllers/home_view_controller.dart';
 
 class HomeView extends StatefulWidget {
@@ -21,6 +22,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    Scale.init(context);
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(),

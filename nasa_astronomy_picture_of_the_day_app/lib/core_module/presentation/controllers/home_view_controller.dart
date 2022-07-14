@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../error/exceptions.dart';
-import '../../domain/entities/picture_of_the_day_entity.dart';
-import '../../domain/services/get_pictures_of_the_day_list_service.dart';
+import '../../domain/entities/picture_entity.dart';
+import '../../domain/services/get_pictures_from_date_service.dart';
 
 class HomeViewController extends ChangeNotifier {
-  final GetPicturesOfTheDayListFromDateService _getPicturesOfTheDayListFromDateService;
+  final GetPicturesFromDateService _getPicturesOfTheDayListFromDateService;
 
   HomeViewController(this._getPicturesOfTheDayListFromDateService);
 

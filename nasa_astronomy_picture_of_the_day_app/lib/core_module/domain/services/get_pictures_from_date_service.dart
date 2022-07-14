@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
-import '../entities/picture_of_the_day_entity.dart';
+import '../entities/picture_entity.dart';
 import '../i_repositories/i_core_repository.dart';
 import '../../error/failures.dart';
 
-class GetPicturesOfTheDayListFromDateService {
+class GetPicturesFromDateService {
   final ICoreRepository _repository;
 
-  GetPicturesOfTheDayListFromDateService(this._repository);
+  GetPicturesFromDateService(this._repository);
 
   Future<Either<CoreFailure, List<PictureEntity>>> call({required String startDate}) async =>
-      await _repository.getPicturesListFromDate(startDate: startDate);
+      await _repository.getPicturesFromDate(startDate: startDate);
 }

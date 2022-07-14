@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/gateways/core_gateway.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/repositories/core_repository.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_of_the_day_entity.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/proxies/proxy_picture_of_the_day_entity.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/proxies/proxy_picture_entity.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/i_repositories/i_core_repository.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/exceptions.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/failures.dart';
@@ -24,21 +24,21 @@ void main() {
   });
 
   group('CoreRepository.getPicturesListFromDate', () {
-    test('Should return a PictureOfTheDayEntity List on success', () async {
-      when(() => gateway.getPicturesListFromDate(startDate: any(named: 'startDate')))
+    test('Should return a PictureEntity List on success', () async {
+      when(() => gateway.getPicturesFromDate(startDate: any(named: 'startDate')))
           .thenAnswer((_) async => tPictureOfTheDayList);
-      final result = await repository.getPicturesListFromDate(startDate: tStartDate);
+      final result = await repository.getPicturesFromDate(startDate: tStartDate);
       expect(result, Right(tPictureOfTheDayList));
-      verify(() => gateway.getPicturesListFromDate(startDate: tStartDate)).called(1);
+      verify(() => gateway.getPicturesFromDate(startDate: tStartDate)).called(1);
       verifyNoMoreInteractions(gateway);
     });
 
-    test('Should return a GetPicturesListFromDateFailure on failure', () async {
-      when(() => gateway.getPicturesListFromDate(startDate: any(named: 'startDate')))
-          .thenThrow(GetPicturesListException(StackTrace.empty, '', Exception()));
-      final result = await repository.getPicturesListFromDate(startDate: tStartDate);
-      expect(result, Left(GetPicturesListFromDateFailure()));
-      verify(() => gateway.getPicturesListFromDate(startDate: tStartDate)).called(1);
+    test('Should return a GetPicturesFromDateFailure on failure', () async {
+      when(() => gateway.getPicturesFromDate(startDate: any(named: 'startDate')))
+          .thenThrow(GetPicturesException(StackTrace.empty, '', Exception()));
+      final result = await repository.getPicturesFromDate(startDate: tStartDate);
+      expect(result, Left(GetPicturesFromDateFailure()));
+      verify(() => gateway.getPicturesFromDate(startDate: tStartDate)).called(1);
       verifyNoMoreInteractions(gateway);
     });
   });
