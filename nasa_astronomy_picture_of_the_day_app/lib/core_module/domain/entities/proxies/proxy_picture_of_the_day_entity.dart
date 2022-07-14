@@ -1,4 +1,4 @@
-import '../../../../core/proxies/proxier.dart';
+import '../../../shared/proxies/proxier.dart';
 import '../picture_of_the_day_entity.dart';
 
 class ProxyPictureOfTheDayEntity {

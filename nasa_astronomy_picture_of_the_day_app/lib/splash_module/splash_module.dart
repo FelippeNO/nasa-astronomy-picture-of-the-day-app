@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'presentation/views/home_view.dart';
+import '../core_module/presentation/views/home_view.dart';
 
 class SplashModule extends Module {
   @override

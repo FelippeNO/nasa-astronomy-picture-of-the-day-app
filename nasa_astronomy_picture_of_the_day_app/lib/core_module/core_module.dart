@@ -1,10 +1,9 @@
 import 'package:flutter_modular/flutter_modular.dart';
-
-import 'core/core_http_client.dart';
 import 'data/gateways/core_gateway.dart';
 import 'data/repositories/core_repository.dart';
 import 'domain/services/get_pictures_of_the_day_list_service.dart';
 import 'presentation/controllers/home_view_controller.dart';
+import 'shared/network/core_http_client.dart';
 
 class CoreModule extends Module {
   @override

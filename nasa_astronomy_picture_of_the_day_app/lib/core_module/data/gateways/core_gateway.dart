@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart';
-import '../../core/core_http_client.dart';
+import '../../shared/network/core_http_client.dart';
 import '../mappers/picture_of_the_day_mapper.dart';
 import '../../domain/entities/picture_of_the_day_entity.dart';
 import '../../error/exceptions.dart';

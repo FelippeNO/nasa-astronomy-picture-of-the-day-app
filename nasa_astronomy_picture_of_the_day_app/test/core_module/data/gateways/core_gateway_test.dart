@@ -3,10 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core/core_http_client.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/data/gateways/core_gateway.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/error/exceptions.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/gateways/core_gateway.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_of_the_day_entity.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/exceptions.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/network/core_http_client.dart';
 
 class MockCoreHttpClient extends Mock implements CoreHttpClient {}
 

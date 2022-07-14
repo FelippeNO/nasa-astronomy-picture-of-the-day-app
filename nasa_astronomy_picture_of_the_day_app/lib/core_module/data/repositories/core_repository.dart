@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import '../gateways/core_gateway.dart';
+
 import '../../domain/entities/picture_of_the_day_entity.dart';
 import '../../domain/i_repositories/i_core_repository.dart';
 import '../../error/failures.dart';
+import '../gateways/core_gateway.dart';
 
 class CoreRepository implements ICoreRepository {
   final ICoreGateway _gateway;
