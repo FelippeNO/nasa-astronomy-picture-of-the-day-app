@@ -2,6 +2,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core/proxies/proxier.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core/ui/scale.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/data/gateways/core_gateway.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/picture_of_the_day_entity.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/domain/entities/proxies/proxy_picture_of_the_day_entity.dart';
 
@@ -45,9 +46,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     PictureOfTheDayEntity picture = ProxyPictureOfTheDayEntity.generateSingle();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -55,13 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(picture.title),
-            Text(picture.explanation),
-            Text(picture.date.toString()),
-            Image.network(picture.hdurl),
-            Image.network(picture.url)
-          ],
+          children: <Widget>[],
         ),
       ),
       floatingActionButton: FloatingActionButton(
