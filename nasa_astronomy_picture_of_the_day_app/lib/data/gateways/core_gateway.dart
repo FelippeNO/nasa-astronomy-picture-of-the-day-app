@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../../core/core_http_client.dart';
 import '../mappers/picture_of_the_day_mapper.dart';
@@ -22,12 +20,13 @@ class CoreGateway implements ICoreGateway {
     try {
       Response response = await _coreHttpClient.getPicturesListFromDate(startDate);
       if (response.statusCode != 200) {
-        throw GetPicturesListException();
+        throw GetPicturesListException(
+            StackTrace.empty, '_coreHttpClient.getPicturesListFromDate', Exception("statusCode != 200"));
       }
       return List<PictureOfTheDayEntity>.from(
           json.decode(response.body).map((data) => PictureOfTheDayMapper.fromJson(data)));
-    } catch (e) {
-      throw GetPicturesListException();
+    } catch (e, stacktrace) {
+      throw GetPicturesListException(stacktrace, '_coreHttpClient.getPicturesListFromDate', e);
     }
   }
 
@@ -36,11 +35,12 @@ class CoreGateway implements ICoreGateway {
     try {
       Response response = await _coreHttpClient.getPictureByDate(date);
       if (response.statusCode != 200) {
-        throw GetPictureOfTheDayException();
+        throw GetPictureOfTheDayException(
+            StackTrace.empty, '_coreHttpClient.getPictureByDate', Exception("statusCode != 200"));
       }
       return PictureOfTheDayMapper.fromJson(json.decode(response.body));
-    } catch (e) {
-      throw GetPictureOfTheDayException();
+    } catch (e, stacktrace) {
+      throw GetPictureOfTheDayException(stacktrace, '_coreHttpClient.getPictureOfTheDayByDate', e);
     }
   }
 }

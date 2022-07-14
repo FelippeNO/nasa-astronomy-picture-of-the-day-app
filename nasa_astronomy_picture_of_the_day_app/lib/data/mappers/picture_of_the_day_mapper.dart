@@ -11,8 +11,8 @@ class PictureOfTheDayMapper {
         hdurl: json['hdurl'],
         url: json['url'],
       );
-    } catch (e) {
-      throw JSONParserException();
+    } catch (e, stacktrace) {
+      throw JSONParserException(stacktrace, 'PictureOfTheDayMapper.fromJson', e);
     }
   }
 }

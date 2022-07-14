@@ -1,7 +1,19 @@
-class CoreException implements Exception {}
+import 'package:flutter/material.dart';
 
-class JSONParserException extends CoreException {}
+class CoreException implements Exception {
+  CoreException(StackTrace? stackTrace, String? label, dynamic exception) {
+    debugPrintStack(label: 'Exception :: $label', stackTrace: stackTrace);
+  }
+}
 
-class GetPicturesListException extends CoreException {}
+class JSONParserException extends CoreException {
+  JSONParserException(super.stackTrace, super.label, super.exception);
+}
 
-class GetPictureOfTheDayException extends CoreException {}
+class GetPicturesListException extends CoreException {
+  GetPicturesListException(super.stackTrace, super.label, super.exception);
+}
+
+class GetPictureOfTheDayException extends CoreException {
+  GetPictureOfTheDayException(super.stackTrace, super.label, super.exception);
+}
