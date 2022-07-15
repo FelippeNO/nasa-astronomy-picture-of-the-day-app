@@ -31,5 +31,7 @@ class CoreModule extends Module {
   ];
 
   @override
-  final List<ModularRoute> routes = [ChildRoute('/detailed', child: (_, args) => const PictureDetailedView())];
+  final List<ModularRoute> routes = [
+    ChildRoute('/detailed', child: (_, args) => PictureDetailedView(pictureEntity: args.data))
+  ];
 }

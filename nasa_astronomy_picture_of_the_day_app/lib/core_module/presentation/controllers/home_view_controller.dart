@@ -15,7 +15,7 @@ class HomeViewController extends ChangeNotifier {
   ValueNotifier<TextEditingController> searchController = ValueNotifier(TextEditingController());
 
   void initialize() async {
-    final serviceRequest = await _getPicturesOfTheDayListFromDateService.call(startDate: "2022-06-25");
+    final serviceRequest = await _getPicturesOfTheDayListFromDateService.call(startDate: "2022-05-18");
     final result = serviceRequest.fold((l) => l, (r) => r);
     if (result is List<PictureEntity>) {
       pictureOfTheDayList.value = result;
@@ -34,7 +34,8 @@ class HomeViewController extends ChangeNotifier {
 
     bool existsDateOrTitle(PictureEntity element) {
       if ((element.title.toLowerCase().contains(searchText.toLowerCase())) ||
-          (element.formatDateYYYYMMDD().contains(searchText))) {
+          (element.formatDateYYYYMMDD().contains(searchText.toLowerCase())) ||
+          (element.formatDateMMMMDY().toLowerCase().contains(searchText.toLowerCase()))) {
         return true;
       }
       return false;

@@ -5,7 +5,6 @@ class ProxyPictureEntity {
   static PictureEntity generateSingle() => PictureEntity(
         date: proxyDate,
         explanation: proxyWords(120),
-        hdurl: proxyImgUrl,
         url: proxyImgUrl,
         title: proxyWords(),
       );

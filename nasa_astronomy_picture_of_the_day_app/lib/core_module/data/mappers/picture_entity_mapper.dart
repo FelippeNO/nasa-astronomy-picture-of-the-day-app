@@ -8,7 +8,6 @@ class PictureEntityMapper {
         date: DateTime.parse(json['date']),
         title: json['title'],
         explanation: json['explanation'],
-        hdurl: json['hdurl'],
         url: json['url'],
       );
     } catch (e, stacktrace) {
@@ -21,7 +20,6 @@ class PictureEntityMapper {
     try {
       data['date'] = picture.formatDateYYYYMMDD();
       data['explanation'] = picture.explanation;
-      data['hdurl'] = picture.hdurl;
       data['title'] = picture.title;
       data['url'] = picture.url;
       return data;

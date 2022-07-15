@@ -44,63 +44,64 @@ class _HomeViewState extends State<HomeView> {
               },
             ),
             ValueListenableBuilder<bool>(
-                valueListenable: homeViewController.isSearchInView,
-                builder: (context, searchController, _) {
-                  return ValueListenableBuilder<bool>(
-                    valueListenable: homeViewController.isListLoaded,
-                    builder: (context, value, _) {
-                      if (searchController == true) {
-                        return ValueListenableBuilder<List<PictureEntity>>(
-                          valueListenable: homeViewController.searchedPictures,
-                          builder: (context, searchedPictures, _) {
-                            {
-                              return SizedBox(
-                                height: Scale.height(75),
-                                child: ListView.builder(
-                                  itemCount: searchedPictures.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Modular.to.pushNamed('/core/detailed');
-                                      },
-                                      child: PictureTile(
-                                        pictureEntity: searchedPictures[index],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            }
-                          },
-                        );
-                      } else {
-                        return ValueListenableBuilder<List<PictureEntity>>(
-                          valueListenable: homeViewController.pictureOfTheDayList,
-                          builder: (context, pictureList, _) {
-                            {
-                              return SizedBox(
-                                height: Scale.height(75),
-                                child: ListView.builder(
-                                  itemCount: pictureList.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Modular.to.pushNamed('/core/detailed');
-                                      },
-                                      child: PictureTile(
-                                        pictureEntity: pictureList[index],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            }
-                          },
-                        );
-                      }
-                    },
-                  );
-                }),
+              valueListenable: homeViewController.isSearchInView,
+              builder: (context, searchController, _) {
+                return ValueListenableBuilder<bool>(
+                  valueListenable: homeViewController.isListLoaded,
+                  builder: (context, value, _) {
+                    if (searchController == true) {
+                      return ValueListenableBuilder<List<PictureEntity>>(
+                        valueListenable: homeViewController.searchedPictures,
+                        builder: (context, searchedPictures, _) {
+                          {
+                            return SizedBox(
+                              height: Scale.height(75),
+                              child: ListView.builder(
+                                itemCount: searchedPictures.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Modular.to.pushNamed('/core/detailed', arguments: searchedPictures[index]);
+                                    },
+                                    child: PictureTile(
+                                      pictureEntity: searchedPictures[index],
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    } else {
+                      return ValueListenableBuilder<List<PictureEntity>>(
+                        valueListenable: homeViewController.pictureOfTheDayList,
+                        builder: (context, pictureList, _) {
+                          {
+                            return SizedBox(
+                              height: Scale.height(75),
+                              child: ListView.builder(
+                                itemCount: pictureList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Modular.to.pushNamed('/core/detailed', arguments: pictureList[index]);
+                                    },
+                                    child: PictureTile(
+                                      pictureEntity: pictureList[index],
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    }
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),
