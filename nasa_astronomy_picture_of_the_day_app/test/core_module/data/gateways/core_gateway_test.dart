@@ -7,11 +7,16 @@ import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/gateways/
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/exceptions.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/success.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/get_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/network/core_http_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MockCoreHttpClient extends Mock implements CoreHttpClient {}
 
 class MockCoreSharedPrefs extends Mock implements CoreSharedPreferences {}
+
+class MockGetSharedPreferencesInstance extends Mock implements GetSharedPreferencesInstance {}
 
 void main() {
   DateTime tStartDateTime = DateTime(2022, 06, 29);
@@ -19,11 +24,13 @@ void main() {
   final String tFormattedDateTime = formatter.format(tStartDateTime);
 
   late MockCoreHttpClient coreHttpClient;
+  late MockGetSharedPreferencesInstance sharedPrefsInstance;
   late MockCoreSharedPrefs coreSharedPrefs;
   late CoreGateway coreGateway;
 
   setUp(() {
     coreHttpClient = MockCoreHttpClient();
+    sharedPrefsInstance = MockGetSharedPreferencesInstance();
     coreSharedPrefs = MockCoreSharedPrefs();
     coreGateway = CoreGateway(coreHttpClient, coreSharedPrefs);
   });
@@ -54,11 +61,18 @@ void main() {
     "url": "https://apod.nasa.gov/apod/image/2201/IMG_4039copia2_1024.jpg"
   };
 
-  group('CoreGateway.getPicturesListFromDate', () {
+  group('CoreGateway.getPicturesFromDate', () {
     test('Should return a PictureEntity List on success', () async {
       when(() => coreHttpClient.getPicturesFromDate(tFormattedDateTime))
           .thenAnswer((_) async => http.Response(json.encode(tPictureOfTheDayEntityJsonList), 200));
       final result = await coreGateway.getPicturesFromDate(startDate: tFormattedDateTime);
+
+      SharedPreferences.setMockInitialValues({"tPicture/": tPictureOfTheDayEntityJsonList.toString()});
+
+      SharedPreferences.getInstance().then((value) {
+        expect(value.getString("tPicture/"), tPictureOfTheDayEntityJsonList.toString());
+      });
+
       expect(result, isA<List<PictureEntity>>());
       verify(() => coreHttpClient.getPicturesFromDate(tFormattedDateTime)).called(1);
       verifyNoMoreInteractions(coreHttpClient);
@@ -74,6 +88,18 @@ void main() {
       verify(() => coreHttpClient.getPicturesFromDate(tFormattedDateTime)).called(1);
       verifyNoMoreInteractions(coreHttpClient);
     });
+  });
+
+  test('Can Create Preferences', () async {
+    SharedPreferences.setMockInitialValues({}); //set values here
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    bool working = false;
+    String name = 'john';
+    pref.setBool('working', working);
+    pref.setString('name', name);
+
+    expect(pref.getBool('working'), false);
+    expect(pref.getString('name'), 'john');
   });
 
   group('CoreGateway.getPictureByDate', () {

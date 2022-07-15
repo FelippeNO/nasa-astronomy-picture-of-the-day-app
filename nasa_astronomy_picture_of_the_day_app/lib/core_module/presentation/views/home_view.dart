@@ -23,6 +23,8 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
   }
 
+  Future refresh() async {}
+
   @override
   Widget build(BuildContext context) {
     Scale.init(context);
@@ -39,7 +41,7 @@ class _HomeViewState extends State<HomeView> {
               onChanged: (value) {
                 if (value.isNotEmpty) {
                   homeViewController.isSearchInView.value = true;
-                  homeViewController.search();
+                  homeViewController.searchByNameAndDate();
                 } else {
                   homeViewController.isSearchInView.value = false;
                 }
@@ -77,23 +79,26 @@ class _HomeViewState extends State<HomeView> {
                       );
                     } else {
                       return ValueListenableBuilder<List<PictureEntity>>(
-                        valueListenable: homeViewController.pictureOfTheDayList,
+                        valueListenable: homeViewController.pictures,
                         builder: (context, pictureList, _) {
                           {
                             return SizedBox(
                               height: Scale.height(75),
-                              child: ListView.builder(
-                                itemCount: pictureList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Modular.to.pushNamed('/core/detailed', arguments: pictureList[index]);
-                                    },
-                                    child: PictureTile(
-                                      pictureEntity: pictureList[index],
-                                    ),
-                                  );
-                                },
+                              child: RefreshIndicator(
+                                onRefresh: () => homeViewController.handlePullToRefresh(),
+                                child: ListView.builder(
+                                  itemCount: pictureList.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Modular.to.pushNamed('/core/detailed', arguments: pictureList[index]);
+                                      },
+                                      child: PictureTile(
+                                        pictureEntity: pictureList[index],
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             );
                           }

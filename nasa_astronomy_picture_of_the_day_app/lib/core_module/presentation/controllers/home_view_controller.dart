@@ -1,48 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/services/get_pictures_from_shared_prefs_service.dart';
 import '../../error/exceptions.dart';
 import '../../domain/entities/picture_entity.dart';
 import '../../domain/services/get_pictures_from_date_service.dart';
 
 class HomeViewController extends ChangeNotifier {
-  final GetPicturesFromDateService _getPicturesOfTheDayListFromDateService;
+  final GetPicturesFromDateService _getPicturesFromDateService;
   final GetPicturesFromSharedPrefsService _getPicturesFromSharedPrefsService;
 
-  HomeViewController(this._getPicturesOfTheDayListFromDateService, this._getPicturesFromSharedPrefsService);
+  HomeViewController(this._getPicturesFromDateService, this._getPicturesFromSharedPrefsService);
 
-  ValueNotifier<List<PictureEntity>> pictureOfTheDayList = ValueNotifier([]);
+  ValueNotifier<List<PictureEntity>> pictures = ValueNotifier([]);
   ValueNotifier<List<PictureEntity>> searchedPictures = ValueNotifier([]);
   ValueNotifier<bool> isSearchInView = ValueNotifier(false);
   ValueNotifier<bool> isListLoaded = ValueNotifier(false);
   ValueNotifier<TextEditingController> searchController = ValueNotifier(TextEditingController());
 
   void initialize() async {
+    await getPicturesFirstTime();
+  }
+
+  Future getPicturesFirstTime() async {
+    final serviceRequest = await _getPicturesFromSharedPrefsService.call();
+    final result = serviceRequest.fold((l) => l, (r) => r);
+    if (result is List<PictureEntity>) {
+      pictures.value = result;
+      orderList();
+    } else {
+      fetchData();
+    }
+  }
+
+  Future getPicturesFromSharedPreferences() async {
     final serviceRequest = await _getPicturesFromSharedPrefsService.call();
     final result = serviceRequest.fold((l) => l, (r) => r);
 
     if (result is List<PictureEntity>) {
-      pictureOfTheDayList.value = result;
+      pictures.value = result;
     } else {
-      throw CoreException(StackTrace.empty, "Couldn't get Pictures Of The Day List", Exception);
+      throw CoreException(StackTrace.empty, "Couldn't get Pictures Of The Day List", CoreException);
     }
-
-    // final serviceRequest = await _getPicturesOfTheDayListFromDateService.call(startDate: "2022-05-18");
-    // final result = serviceRequest.fold((l) => l, (r) => r);
-    // if (result is List<PictureEntity>) {
-    //   pictureOfTheDayList.value = result;
-    // } else {
-    //   throw CoreException(StackTrace.empty, "Couldn't get Pictures Of The Day List", Exception);
-    // }
-    // final listReversedOrder = pictureOfTheDayList.value.reversed;
-    // pictureOfTheDayList.value = listReversedOrder.toList();
+    orderList();
     isListLoaded.value = true;
     notifyListeners();
   }
 
-  void search() {
+  Future fetchData() async {
+    final serviceRequest = await _getPicturesFromDateService.call(startDate: "2022-05-18");
+    final result = serviceRequest.fold((l) => l, (r) => r);
+    if (result is List<PictureEntity>) {
+      pictures.value = result;
+    } else {
+      throw CoreException(StackTrace.empty, "Couldn't fetch Pictures", Exception);
+    }
+    orderList();
+    notifyListeners();
+  }
+
+  Future handlePullToRefresh() async {
+    fetchData();
+  }
+
+  void searchByNameAndDate() {
     final searchText = searchController.value.text;
-    final list = pictureOfTheDayList.value;
+    final list = pictures.value;
 
     bool existsDateOrTitle(PictureEntity element) {
       if ((element.title.toLowerCase().contains(searchText.toLowerCase())) ||
@@ -57,5 +78,16 @@ class HomeViewController extends ChangeNotifier {
     searchedPictures.value = listFiltered;
     isSearchInView.value = true;
     notifyListeners();
+  }
+
+  void clearSearch() {
+    searchController.value.clear();
+    isSearchInView.value = false;
+    notifyListeners();
+  }
+
+  void orderList() {
+    final listReversedOrder = pictures.value.reversed;
+    pictures.value = listReversedOrder.toList();
   }
 }

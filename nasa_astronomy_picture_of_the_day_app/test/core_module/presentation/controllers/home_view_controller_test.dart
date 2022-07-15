@@ -31,7 +31,7 @@ void main() {
   tOriginalPictureList.add(testPictureEntity2);
   tOriginalPictureList.add(testPictureEntity3);
 
-  test('HomeViewController.search() : Should return a PictureList with 2 itens', () {
+  test('HomeViewController.searchByNameAndDate() : Should return a PictureList with 2 itens', () {
     final searchText = tSearchText;
     final list = tOriginalPictureList;
 

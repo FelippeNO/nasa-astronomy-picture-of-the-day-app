@@ -2,6 +2,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/services/get_pictures_from_shared_prefs_service.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/presentation/views/picture_detailed_view.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/get_shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'data/gateways/core_gateway.dart';
 import 'data/repositories/core_repository.dart';
 import 'domain/services/get_pictures_from_date_service.dart';
@@ -17,7 +19,8 @@ class CoreModule extends Module {
 
     /// ------------------------------ Shared Preferences --------------------------------
 
-    Bind.singleton((i) => CoreSharedPreferences(), export: true),
+    Bind.singleton((i) => GetSharedPreferencesInstance(), export: true),
+    Bind.singleton((i) => CoreSharedPreferences(i()), export: true),
 
     /// ------------------------------ Gateways --------------------------------
 
