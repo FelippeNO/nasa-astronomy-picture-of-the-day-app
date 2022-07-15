@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class PictureEntity {
   final String title;
   final String url;
@@ -12,4 +14,20 @@ class PictureEntity {
     required this.url,
     required this.title,
   });
+
+  String formatDateYYYYMMDD() {
+    DateTime dateToParse = date;
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String dateFormated = formatter.format(dateToParse);
+
+    return dateFormated;
+  }
+
+  String formatDateMMMMDY() {
+    DateTime dateToParse = date;
+    final DateFormat formatter = DateFormat('MMMM d, y');
+    final String dateFormated = formatter.format(dateToParse);
+
+    return dateFormated;
+  }
 }

@@ -5,6 +5,7 @@ class Scale {
   static late double heightDevice;
 
   static double width(double percentage) => (widthDevice / 100) * percentage;
+  static double height(double percentage) => (heightDevice / 100) * percentage;
   static double textSize(double size) => (widthDevice / 1000) * size;
 
   static void init(BuildContext context) {

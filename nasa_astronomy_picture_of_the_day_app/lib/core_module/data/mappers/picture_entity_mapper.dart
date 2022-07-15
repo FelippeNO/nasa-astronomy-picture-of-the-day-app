@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 import '../../domain/entities/picture_entity.dart';
 import '../../error/exceptions.dart';
 
@@ -19,11 +17,9 @@ class PictureEntityMapper {
   }
 
   static Map<String, dynamic> toJson(PictureEntity picture) {
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
-
     final Map<String, String> data = <String, String>{};
     try {
-      data['date'] = formatter.format(picture.date);
+      data['date'] = picture.formatDateYYYYMMDD();
       data['explanation'] = picture.explanation;
       data['hdurl'] = picture.hdurl;
       data['title'] = picture.title;
