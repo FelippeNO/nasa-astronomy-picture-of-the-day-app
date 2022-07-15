@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/ui/scale.dart';
 import '../../domain/entities/picture_entity.dart';
 import '../controllers/home_view_controller.dart';
@@ -33,6 +34,7 @@ class _HomeViewState extends State<HomeView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextFormField(
+              style: TextStyle(color: Colors.white),
               controller: homeViewController.searchController.value,
               onChanged: (value) {
                 if (value.isNotEmpty) {

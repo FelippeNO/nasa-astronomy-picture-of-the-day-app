@@ -4,11 +4,14 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/gateways/core_gateway.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/exceptions.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/network/core_http_client.dart';
 
 class MockCoreHttpClient extends Mock implements CoreHttpClient {}
+
+class MockCoreSharedPrefs extends Mock implements CoreSharedPreferences {}
 
 void main() {
   DateTime tStartDateTime = DateTime(2022, 06, 29);
@@ -16,11 +19,13 @@ void main() {
   final String tFormattedDateTime = formatter.format(tStartDateTime);
 
   late MockCoreHttpClient coreHttpClient;
+  late MockCoreSharedPrefs coreSharedPrefs;
   late CoreGateway coreGateway;
 
   setUp(() {
     coreHttpClient = MockCoreHttpClient();
-    coreGateway = CoreGateway(coreHttpClient);
+    coreSharedPrefs = MockCoreSharedPrefs();
+    coreGateway = CoreGateway(coreHttpClient, coreSharedPrefs);
   });
 
   final List<Map<String, String>> tPictureOfTheDayEntityJsonList = [

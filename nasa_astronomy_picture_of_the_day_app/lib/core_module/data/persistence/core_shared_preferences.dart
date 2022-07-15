@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/mappers/picture_entity_mapper.dart';
+
 import '../../domain/entities/picture_entity.dart';
 import '../../error/success.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,9 +29,15 @@ class CoreSharedPreferences implements ICoreSharedPreferences {
   }
 
   @override
-  Future<List<PictureEntity>> getPicturesFromSharedPrefs() {
-    // TODO: implement getPicturesFromSharedPrefs
-    throw UnimplementedError();
+  Future<List<PictureEntity>> getPicturesFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("pictures/") != null) {
+      print("n nulo............");
+      return List<PictureEntity>.from(
+          json.decode(prefs.getString("pictures/")!).map((data) => PictureEntityMapper.fromJson(data)));
+    } else {
+      return [];
+    }
   }
 
   @override
@@ -43,9 +53,11 @@ class CoreSharedPreferences implements ICoreSharedPreferences {
   }
 
   @override
-  Future<CoreSuccess> savePicturesToSharedPrefs({required String data}) {
-    // TODO: implement savePicturesToSharedPrefs
-    throw UnimplementedError();
+  Future<CoreSuccess> savePicturesToSharedPrefs({required String data}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("pictures/", data);
+    print(data);
+    return CoreSuccess();
   }
 }
 

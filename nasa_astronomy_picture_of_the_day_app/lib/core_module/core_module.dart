@@ -1,4 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/services/get_pictures_from_shared_prefs_service.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/presentation/views/picture_detailed_view.dart';
 import 'data/gateways/core_gateway.dart';
 import 'data/repositories/core_repository.dart';
@@ -13,21 +15,26 @@ class CoreModule extends Module {
 
     Bind.singleton((i) => CoreHttpClient(), export: true),
 
+    /// ------------------------------ Shared Preferences --------------------------------
+
+    Bind.singleton((i) => CoreSharedPreferences(), export: true),
+
     /// ------------------------------ Gateways --------------------------------
 
-    Bind.singleton((i) => CoreGateway(i()), export: true),
+    Bind.singleton((i) => CoreGateway(i(), i()), export: true),
 
     /// ---------------------------- Repositories ------------------------------
 
-    Bind.singleton((i) => CoreRepository(i()), export: true),
+    Bind.singleton((i) => CoreRepository(i(), i()), export: true),
 
     /// ------------------------------ Services --------------------------------
 
     Bind.singleton((i) => GetPicturesFromDateService(i()), export: true),
+    Bind.singleton((i) => GetPicturesFromSharedPrefsService(i()), export: true),
 
     /// ------------------------------- State ---------------------------------
 
-    Bind.singleton((i) => HomeViewController(i()), export: true),
+    Bind.singleton((i) => HomeViewController(i(), i()), export: true),
   ];
 
   @override

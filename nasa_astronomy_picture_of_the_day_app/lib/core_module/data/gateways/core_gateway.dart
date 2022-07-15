@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
 import '../../shared/network/core_http_client.dart';
 import '../mappers/picture_entity_mapper.dart';
 import '../../domain/entities/picture_entity.dart';
@@ -12,8 +13,9 @@ abstract class ICoreGateway {
 
 class CoreGateway implements ICoreGateway {
   final ICoreHttpClient _coreHttpClient;
+  final ICoreSharedPreferences _coreSharedPrefs;
 
-  CoreGateway(this._coreHttpClient);
+  CoreGateway(this._coreHttpClient, this._coreSharedPrefs);
 
   @override
   Future<List<PictureEntity>> getPicturesFromDate({required String startDate}) async {
@@ -23,6 +25,8 @@ class CoreGateway implements ICoreGateway {
         throw GetPicturesException(
             StackTrace.empty, '_coreHttpClient.getPicturesListFromDate', Exception("statusCode != 200"));
       }
+      final saving = await _coreSharedPrefs.savePicturesToSharedPrefs(data: response.body);
+      print(saving);
       return List<PictureEntity>.from(json.decode(response.body).map((data) => PictureEntityMapper.fromJson(data)));
     } catch (e, stacktrace) {
       throw GetPicturesException(stacktrace, '_coreHttpClient.getPicturesListFromDate', e);

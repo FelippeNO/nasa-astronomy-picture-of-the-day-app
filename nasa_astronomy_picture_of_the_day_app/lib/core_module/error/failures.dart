@@ -6,3 +6,5 @@ class CoreFailure extends Equatable {
 }
 
 class GetPicturesFromDateFailure extends CoreFailure {}
+
+class GetPicturesFromSharedPrefsFailure extends CoreFailure {}
