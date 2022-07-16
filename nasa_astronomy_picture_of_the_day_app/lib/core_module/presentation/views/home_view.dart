@@ -10,6 +10,7 @@ import '../controllers/home_view_controller.dart';
 
 class HomeView extends StatefulWidget {
   HomeView({Key? key}) : super(key: key);
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -29,6 +30,7 @@ class _HomeViewState extends State<HomeView> {
     Scale.init(context);
     return SafeArea(
       child: Scaffold(
+        key: widget.scaffoldKey,
         backgroundColor: Colors.white,
         appBar: AppBar(),
         body: Column(

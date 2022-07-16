@@ -3,17 +3,20 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'global_module.dart';
 
 void main() {
-  runApp(const Core());
+  runApp(Core());
 }
 
 class Core extends StatelessWidget {
-  const Core({super.key});
+  Core({super.key});
+
+  static final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
     return ModularApp(
       module: GlobalModule(),
       child: MaterialApp.router(
+        scaffoldMessengerKey: rootScaffoldMessengerKey,
         title: 'Nasa Astronomy Picture Of The Day',
         theme: ThemeData(useMaterial3: true),
         supportedLocales: const [Locale('en', '')],
