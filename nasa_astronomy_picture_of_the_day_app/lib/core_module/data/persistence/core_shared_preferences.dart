@@ -58,8 +58,13 @@ class CoreSharedPreferences implements ICoreSharedPreferences {
 
   @override
   Future<CoreSuccess> savePicturesToSharedPrefs({required String data}) async {
-    final prefs = await _sharedPreferences.sharedPreferences;
-    prefs.setString("pictures/", data);
-    return CoreSuccess();
+    try {
+      final prefs = await _sharedPreferences.sharedPreferences;
+      prefs.setString("pictures/", data);
+      return CoreSuccess();
+    } catch (e) {
+      throw SavePicturesToSharedPrefsException(
+          StackTrace.empty, 'savePicturesToSharedPrefs', Exception("Could`nt save json to Shared Prefs"));
+    }
   }
 }

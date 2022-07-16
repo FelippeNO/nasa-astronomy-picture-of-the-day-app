@@ -66,7 +66,6 @@ void main() {
       final result = await coreGateway.getPicturesFromDate(startDate: tFormattedDateTime);
 
       SharedPreferences.setMockInitialValues({"tPicture/": tPictureOfTheDayEntityJsonList.toString()});
-
       SharedPreferences.getInstance().then((value) {
         expect(value.getString("tPicture/"), tPictureOfTheDayEntityJsonList.toString());
       });

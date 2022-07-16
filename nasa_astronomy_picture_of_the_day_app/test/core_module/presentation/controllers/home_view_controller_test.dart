@@ -1,5 +1,7 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/presentation/controllers/home_view_controller.dart';
 
 void main() {
   String tSearchText = "10";

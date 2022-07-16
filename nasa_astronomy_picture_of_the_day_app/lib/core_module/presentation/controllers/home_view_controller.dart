@@ -79,12 +79,6 @@ class HomeViewController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearSearch() {
-    searchController.value.clear();
-    isSearchInView.value = false;
-    notifyListeners();
-  }
-
   void orderList() {
     final listReversedOrder = pictures.value.reversed;
     pictures.value = listReversedOrder.toList();

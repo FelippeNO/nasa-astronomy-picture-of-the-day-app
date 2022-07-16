@@ -26,6 +26,7 @@ class CoreGateway implements ICoreGateway {
             StackTrace.empty, '_coreHttpClient.getPicturesListFromDate', Exception("statusCode != 200"));
       }
       await _coreSharedPrefs.savePicturesToSharedPrefs(data: response.body);
+
       return List<PictureEntity>.from(json.decode(response.body).map((data) => PictureEntityMapper.fromJson(data)));
     } catch (e, stacktrace) {
       throw GetPicturesException(stacktrace, '_coreHttpClient.getPicturesListFromDate', e);

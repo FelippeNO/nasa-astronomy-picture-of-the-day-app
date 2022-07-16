@@ -21,3 +21,7 @@ class GetPictureException extends CoreException {
 class GetPicturesFromSharedPrefsException extends CoreException {
   GetPicturesFromSharedPrefsException(super.stackTrace, super.label, super.exception);
 }
+
+class SavePicturesToSharedPrefsException extends CoreException {
+  SavePicturesToSharedPrefsException(super.stackTrace, super.label, super.exception);
+}
