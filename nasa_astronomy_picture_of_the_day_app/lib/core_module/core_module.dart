@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/services/get_pictures_from_shared_prefs_service.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/presentation/views/home_view.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/presentation/views/picture_detailed_view.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/get_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,6 +43,7 @@ class CoreModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
+    ChildRoute('/', child: (_, args) => HomeView()),
     ChildRoute('/detailed', child: (_, args) => PictureDetailedView(pictureEntity: args.data))
   ];
 }

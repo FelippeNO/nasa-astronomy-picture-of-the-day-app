@@ -57,10 +57,6 @@ class HomeViewController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future handlePullToRefresh() async {
-    fetchData();
-  }
-
   void searchByNameAndDate() {
     final searchText = searchController.value.text;
     final list = pictures.value;

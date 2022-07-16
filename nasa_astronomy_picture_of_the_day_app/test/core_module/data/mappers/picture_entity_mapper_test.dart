@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/mappers/picture_entity_mapper.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
 

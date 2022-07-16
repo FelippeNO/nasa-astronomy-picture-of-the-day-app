@@ -1,7 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/presentation/views/picture_detailed_view.dart';
 import 'core_module/core_module.dart';
-import 'splash_module/splash_module.dart';
 
 class GlobalModule extends Module {
   @override
@@ -9,7 +8,6 @@ class GlobalModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ModuleRoute(Modular.initialRoute, module: SplashModule()),
-    ModuleRoute('/core', module: CoreModule()),
+    ModuleRoute(Modular.initialRoute, module: CoreModule()),
   ];
 }
