@@ -26,6 +26,8 @@ class HomeViewController extends ChangeNotifier {
     if (result is List<PictureEntity>) {
       pictures.value = result;
       orderList();
+      isListLoaded.value = true;
+      notifyListeners();
     } else {
       fetchData();
     }
@@ -50,11 +52,12 @@ class HomeViewController extends ChangeNotifier {
     final result = serviceRequest.fold((l) => l, (r) => r);
     if (result is List<PictureEntity>) {
       pictures.value = result;
+      isListLoaded.value = true;
+      orderList();
+      notifyListeners();
     } else {
       throw CoreException(StackTrace.empty, "Couldn't fetch Pictures", Exception);
     }
-    orderList();
-    notifyListeners();
   }
 
   void searchByNameAndDate() {

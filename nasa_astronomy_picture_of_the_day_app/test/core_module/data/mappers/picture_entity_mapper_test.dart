@@ -32,4 +32,13 @@ void main() {
     expect(tPicture.url, pictureCreated.url);
     expect(tPicture.explanation, pictureCreated.explanation);
   });
+
+  test('tPictureDecoded map values should have the same values that tPicture attributes ', () {
+    final tPictureDecoded = PictureEntityMapper.toJson(tPicture);
+
+    expect(tPicture.formatDateYYYYMMDD(), tPictureDecoded["date"]);
+    expect(tPicture.title, tPictureDecoded["title"]);
+    expect(tPicture.url, tPictureDecoded["url"]);
+    expect(tPicture.explanation, tPictureDecoded["explanation"]);
+  });
 }

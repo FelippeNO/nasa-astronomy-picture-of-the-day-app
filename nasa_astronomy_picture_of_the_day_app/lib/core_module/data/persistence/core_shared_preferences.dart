@@ -36,7 +36,6 @@ class CoreSharedPreferences implements ICoreSharedPreferences {
     final prefs = await _sharedPreferences.sharedPreferences;
 
     if (prefs.getString("pictures/") != null) {
-      print("Got PicturesFromSharedPrefs");
       return List<PictureEntity>.from(
           json.decode(prefs.getString("pictures/")!).map((data) => PictureEntityMapper.fromJson(data)));
     } else {
@@ -60,27 +59,7 @@ class CoreSharedPreferences implements ICoreSharedPreferences {
   @override
   Future<CoreSuccess> savePicturesToSharedPrefs({required String data}) async {
     final prefs = await _sharedPreferences.sharedPreferences;
-
-    //  SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("pictures/", data);
-    print(data);
-    print("3232323");
     return CoreSuccess();
   }
 }
-
-  // @override
-  // Future<CoreSuccess> savePictures({required String data}) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString("pictures/", data);
-  //   print(data);
-  //   return SavePictureOfTheDayListSuccess();
-  // }
-
-  //   @override
-  // Future<List<PictureEntity>> getPictures() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   if (prefs.getString("pictures/") == null) {}
-  //   // TODO: implement getPictureOfTheDayList
-  //   throw UnimplementedError();
-  // }

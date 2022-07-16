@@ -28,13 +28,17 @@ class _HomeViewState extends State<HomeView> {
     Scale.init(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         appBar: AppBar(),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextFormField(
               style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                  labelText: "Search",
+                  hintText: "You can search a picture by title or by date.",
+                  hintStyle: TextStyle(color: Colors.white, fontSize: AppFontSize.s4)),
               controller: homeViewController.searchController.value,
               onChanged: (value) {
                 if (value.isNotEmpty) {
@@ -50,23 +54,31 @@ class _HomeViewState extends State<HomeView> {
               builder: (context, searchController, _) {
                 return ValueListenableBuilder<bool>(
                   valueListenable: homeViewController.isListLoaded,
-                  builder: (context, value, _) {
+                  builder: (context, isListLoaded, _) {
                     if (searchController == true) {
-                      return ValueListenableBuilder<List<PictureEntity>>(
-                        valueListenable: homeViewController.searchedPictures,
-                        builder: (context, searchedPictures, _) {
-                          {
-                            return FeedView(
-                                onRefresh: () => homeViewController.fetchData(), pictureList: searchedPictures);
-                          }
-                        },
-                      );
+                      isListLoaded
+                          ? ValueListenableBuilder<List<PictureEntity>>(
+                              valueListenable: homeViewController.searchedPictures,
+                              builder: (context, searchedPictures, _) {
+                                {
+                                  return FeedView(
+                                      onRefresh: () => homeViewController.fetchData(), pictureList: searchedPictures);
+                                }
+                              },
+                            )
+                          : Center(child: CircularProgressIndicator());
+                      return Container(color: Colors.red);
                     } else {
                       return ValueListenableBuilder<List<PictureEntity>>(
                         valueListenable: homeViewController.pictures,
                         builder: (context, pictureList, _) {
                           {
-                            return FeedView(onRefresh: () => homeViewController.fetchData(), pictureList: pictureList);
+                            if (isListLoaded == true) {
+                              return FeedView(
+                                  onRefresh: () => homeViewController.fetchData(), pictureList: pictureList);
+                            } else {
+                              return const LoadingFeed();
+                            }
                           }
                         },
                       );
@@ -150,9 +162,9 @@ class PictureTile extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: AppBorderRadius.brAll5,
                         child: CachedNetworkImage(
-                          fit: BoxFit.fill,
-                          imageUrl: pictureEntity.url,
-                        ),
+                            fit: BoxFit.fill,
+                            imageUrl: pictureEntity.url,
+                            errorWidget: (context, url, error) => const ErrorPictureWidget()),
                       ),
                     ),
                   ],
@@ -160,6 +172,23 @@ class PictureTile extends StatelessWidget {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ErrorPictureWidget extends StatelessWidget {
+  const ErrorPictureWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: const Center(
+        child: Text(
+          "Couldn't get picture because it is not an image",
+          textAlign: TextAlign.center,
         ),
       ),
     );
@@ -183,7 +212,7 @@ class FeedView extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {
-                Modular.to.pushNamed('/core/detailed', arguments: pictureList[index]);
+                Modular.to.pushNamed('/detailed', arguments: pictureList[index]);
               },
               child: PictureTile(
                 pictureEntity: pictureList[index],
@@ -191,6 +220,27 @@ class FeedView extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class LoadingFeed extends StatelessWidget {
+  const LoadingFeed({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: Scale.height(75),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Getting data. Please wait."),
+          Padding(
+            padding: EdgeInsets.only(top: Scale.width(5)),
+            child: const CircularProgressIndicator(),
+          ),
+        ],
       ),
     );
   }
