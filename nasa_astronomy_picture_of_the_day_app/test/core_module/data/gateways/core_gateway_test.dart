@@ -7,10 +7,8 @@ import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/gateways/
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/exceptions.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/success.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/get_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/network/core_http_client.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/ui/connection_snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MockCoreHttpClient extends Mock implements CoreHttpClient {}

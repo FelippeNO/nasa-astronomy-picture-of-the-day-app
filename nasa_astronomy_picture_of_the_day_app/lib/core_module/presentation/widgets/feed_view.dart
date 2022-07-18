@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/presentation/controllers/home_view_controller.dart';
 import '../../domain/entities/picture_entity.dart';
 import 'picture_tile.dart';
 import '../../shared/ui/scale.dart';
@@ -23,9 +24,7 @@ class FeedView extends StatelessWidget {
               onTap: () {
                 CoreNavigator.toDetailedView(pictureList[index]);
               },
-              child: PictureTile(
-                pictureEntity: pictureList[index],
-              ),
+              child: PictureTile(pictureEntity: pictureList[index]),
             );
           },
         ),

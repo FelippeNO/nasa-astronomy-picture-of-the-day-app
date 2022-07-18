@@ -19,7 +19,7 @@ class PictureDetailedView extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: Scale.width(6), vertical: Scale.width(5)),
           decoration: BoxDecoration(color: Colors.white.withOpacity(0.25), borderRadius: AppBorderRadius.brAll5),
           width: Scale.width(100),
-          height: Scale.height(75),
+          height: Scale.height(100),
           child: ListView(
             children: [
               Align(

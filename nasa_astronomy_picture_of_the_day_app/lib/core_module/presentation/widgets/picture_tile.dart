@@ -18,15 +18,11 @@ class PictureTile extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.yellow, width: Scale.width(1)),
           color: Colors.white.withOpacity(0.3),
-          borderRadius: BorderRadius.circular(
-            Scale.width(3),
-          ),
+          borderRadius: AppBorderRadius.brAll3,
         ),
         height: Scale.width(35),
         child: Padding(
-          padding: EdgeInsets.all(
-            Scale.width(3),
-          ),
+          padding: EdgeInsets.all(Scale.width(3)),
           child: Row(
             children: [
               Expanded(
@@ -34,9 +30,7 @@ class PictureTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     YellowBorderContainer(text: pictureEntity.title, height: Scale.width(15)),
-                    SizedBox(
-                      height: Scale.width(2),
-                    ),
+                    SizedBox(height: Scale.width(2)),
                     YellowBorderContainer(text: pictureEntity.formatDateMMMMDY(), height: Scale.width(8)),
                   ],
                 ),

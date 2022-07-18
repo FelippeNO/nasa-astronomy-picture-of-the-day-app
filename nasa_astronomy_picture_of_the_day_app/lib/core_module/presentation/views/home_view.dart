@@ -43,39 +43,33 @@ class _HomeViewState extends State<HomeView> {
             AppTextFormField(controller: homeViewController),
             ValueListenableBuilder<bool>(
               valueListenable: homeViewController.isSearchInView,
-              builder: (context, searchController, _) {
+              builder: (context, isSearchInView, _) {
                 return ValueListenableBuilder<bool>(
                   valueListenable: homeViewController.isListLoaded,
                   builder: (context, isListLoaded, _) {
-                    if (searchController == true) {
-                      return ValueListenableBuilder<List<PictureEntity>>(
-                        valueListenable: homeViewController.searchedPictures,
-                        builder: (context, searchedPictures, _) {
-                          {
-                            if (isListLoaded == true) {
-                              return FeedView(
-                                  onRefresh: () => homeViewController.fetchData(), pictureList: searchedPictures);
-                            } else {
-                              return const LoadingFeed();
-                            }
-                          }
-                        },
-                      );
-                    } else {
-                      return ValueListenableBuilder<List<PictureEntity>>(
-                        valueListenable: homeViewController.pictures,
-                        builder: (context, pictureList, _) {
-                          {
-                            if (isListLoaded == true) {
-                              return FeedView(
-                                  onRefresh: () => homeViewController.fetchData(), pictureList: pictureList);
-                            } else {
-                              return const LoadingFeed();
-                            }
-                          }
-                        },
-                      );
-                    }
+                    return isSearchInView == true
+                        ? ValueListenableBuilder<List<PictureEntity>>(
+                            valueListenable: homeViewController.searchedPictures,
+                            builder: (context, searchedPictures, _) {
+                              {
+                                return isListLoaded == true
+                                    ? FeedView(
+                                        onRefresh: () => homeViewController.fetchData(), pictureList: searchedPictures)
+                                    : const LoadingFeed();
+                              }
+                            },
+                          )
+                        : ValueListenableBuilder<List<PictureEntity>>(
+                            valueListenable: homeViewController.pictures,
+                            builder: (context, pictureList, _) {
+                              {
+                                return isListLoaded == true
+                                    ? FeedView(
+                                        onRefresh: () => homeViewController.fetchData(), pictureList: pictureList)
+                                    : const LoadingFeed();
+                              }
+                            },
+                          );
                   },
                 );
               },
