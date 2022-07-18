@@ -4,7 +4,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/proxies/proxy_picture_entity.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/i_repositories/i_core_repository.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/services/get_pictures_from_date_service.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/services/get_pictures_from_shared_prefs_service.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/failures.dart';
 
