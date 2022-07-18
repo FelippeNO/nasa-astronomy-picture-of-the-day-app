@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:intl/intl.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/ui/scale.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/global_module.dart';
 import '../../domain/entities/picture_entity.dart';
@@ -31,27 +29,17 @@ class _HomeViewState extends State<HomeView> {
     return SafeArea(
       child: Scaffold(
         key: widget.scaffoldKey,
-        backgroundColor: Colors.white,
-        appBar: AppBar(),
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          title: Text(
+            'Nasa Astronomy Picture Of The Day',
+            style: TextStyle(fontSize: AppFontSize.s0),
+          ),
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextFormField(
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  labelText: "Search",
-                  hintText: "You can search a picture by title or by date.",
-                  hintStyle: TextStyle(color: Colors.white, fontSize: AppFontSize.s4)),
-              controller: homeViewController.searchController.value,
-              onChanged: (value) {
-                if (value.isNotEmpty) {
-                  homeViewController.isSearchInView.value = true;
-                  homeViewController.searchByNameAndDate();
-                } else {
-                  homeViewController.isSearchInView.value = false;
-                }
-              },
-            ),
+            AppTextFormField(controller: homeViewController),
             ValueListenableBuilder<bool>(
               valueListenable: homeViewController.isSearchInView,
               builder: (context, searchController, _) {
@@ -59,18 +47,19 @@ class _HomeViewState extends State<HomeView> {
                   valueListenable: homeViewController.isListLoaded,
                   builder: (context, isListLoaded, _) {
                     if (searchController == true) {
-                      isListLoaded
-                          ? ValueListenableBuilder<List<PictureEntity>>(
-                              valueListenable: homeViewController.searchedPictures,
-                              builder: (context, searchedPictures, _) {
-                                {
-                                  return FeedView(
-                                      onRefresh: () => homeViewController.fetchData(), pictureList: searchedPictures);
-                                }
-                              },
-                            )
-                          : Center(child: CircularProgressIndicator());
-                      return Container(color: Colors.red);
+                      return ValueListenableBuilder<List<PictureEntity>>(
+                        valueListenable: homeViewController.searchedPictures,
+                        builder: (context, searchedPictures, _) {
+                          {
+                            if (isListLoaded == true) {
+                              return FeedView(
+                                  onRefresh: () => homeViewController.fetchData(), pictureList: searchedPictures);
+                            } else {
+                              return const LoadingFeed();
+                            }
+                          }
+                        },
+                      );
                     } else {
                       return ValueListenableBuilder<List<PictureEntity>>(
                         valueListenable: homeViewController.pictures,
@@ -97,6 +86,41 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
+class AppTextFormField extends StatelessWidget {
+  final HomeViewController controller;
+  const AppTextFormField({Key? key, required this.controller}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: Scale.width(2)),
+      height: Scale.width(15),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Scale.width(3)),
+        child: TextFormField(
+          style: TextStyle(color: Colors.white, fontSize: AppFontSize.s4),
+          decoration: InputDecoration(
+              icon: const Icon(Icons.search, color: Colors.white),
+              fillColor: Colors.white.withOpacity(0.2),
+              filled: true,
+              labelText: "Search",
+              hintText: "You can search a picture by title or by date.",
+              hintStyle: TextStyle(color: Colors.white, fontSize: AppFontSize.s4)),
+          controller: controller.searchController.value,
+          onChanged: (value) {
+            if (value.isNotEmpty) {
+              controller.isSearchInView.value = true;
+              controller.searchByNameAndDate();
+            } else {
+              controller.isSearchInView.value = false;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
 class PictureTile extends StatelessWidget {
   final PictureEntity pictureEntity;
   const PictureTile({Key? key, required this.pictureEntity}) : super(key: key);
@@ -107,7 +131,8 @@ class PictureTile extends StatelessWidget {
       padding: EdgeInsets.all(Scale.width(2)),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.blue,
+          border: Border.all(color: Colors.yellow, width: Scale.width(1)),
+          color: Colors.white.withOpacity(0.3),
           borderRadius: BorderRadius.circular(
             Scale.width(3),
           ),
@@ -123,35 +148,11 @@ class PictureTile extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Scale.width(2),
-                      ),
-                      alignment: Alignment.center,
-                      color: Colors.green,
-                      height: Scale.width(14.5),
-                      child: Text(
-                        pictureEntity.title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: AppFontSize.s3,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                    YellowBorderContainer(text: pictureEntity.title, height: Scale.width(15)),
+                    SizedBox(
+                      height: Scale.width(2),
                     ),
-                    Container(
-                      alignment: Alignment.center,
-                      color: Colors.red,
-                      height: Scale.width(14.5),
-                      child: Text(
-                        pictureEntity.formatDateMMMMDY(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: AppFontSize.s2,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    YellowBorderContainer(text: pictureEntity.formatDateMMMMDY(), height: Scale.width(8)),
                   ],
                 ),
               ),
@@ -159,7 +160,7 @@ class PictureTile extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: Scale.width(29),
+                      height: Scale.width(27),
                       width: Scale.width(40),
                       decoration: BoxDecoration(borderRadius: AppBorderRadius.brAll5),
                       child: ClipRRect(
@@ -175,6 +176,36 @@ class PictureTile extends StatelessWidget {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class YellowBorderContainer extends StatelessWidget {
+  final double? height;
+  final String text;
+  const YellowBorderContainer({Key? key, required this.text, this.height}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: Scale.width(2),
+      ),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius: AppBorderRadius.brAll5,
+          color: Colors.transparent,
+          border: Border.all(color: Colors.yellow, width: 2)),
+      height: height,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: AppFontSize.s3,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

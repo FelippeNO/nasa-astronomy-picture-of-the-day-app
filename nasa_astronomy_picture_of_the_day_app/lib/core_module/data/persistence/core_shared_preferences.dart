@@ -8,28 +8,12 @@ import '../../error/success.dart';
 abstract class ICoreSharedPreferences {
   Future<CoreSuccess> savePicturesToSharedPrefs({required String data});
   Future<List<PictureEntity>> getPicturesFromSharedPrefs();
-  Future<CoreSuccess> savePictureOfTheDayToSharedPrefs();
-  Future<PictureEntity> getPictureOfTheDayFromSharedPrefs();
-  Future<CoreSuccess> savePictureByDateToSharedPrefs({required String date, required String data});
-  Future<PictureEntity> getPictureByDateFromSharedPrefs({required String date});
 }
 
 class CoreSharedPreferences implements ICoreSharedPreferences {
   final IGetSharedPreferencesInstance _sharedPreferences;
 
   CoreSharedPreferences(this._sharedPreferences);
-
-  @override
-  Future<PictureEntity> getPictureByDateFromSharedPrefs({required String date}) {
-    // TODO: implement getPictureByDateFromSharedPrefs
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<PictureEntity> getPictureOfTheDayFromSharedPrefs() {
-    // TODO: implement getPictureOfTheDayFromSharedPrefs
-    throw UnimplementedError();
-  }
 
   @override
   Future<List<PictureEntity>> getPicturesFromSharedPrefs() async {
@@ -42,18 +26,6 @@ class CoreSharedPreferences implements ICoreSharedPreferences {
       throw GetPicturesFromSharedPrefsException(
           StackTrace.empty, 'getPicturesFromSharedPrefs', Exception("pictures/ == null"));
     }
-  }
-
-  @override
-  Future<CoreSuccess> savePictureByDateToSharedPrefs({required String date, required String data}) {
-    // TODO: implement savePictureByDateToSharedPrefs
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<CoreSuccess> savePictureOfTheDayToSharedPrefs() {
-    // TODO: implement savePictureOfTheDayToSharedPrefs
-    throw UnimplementedError();
   }
 
   @override

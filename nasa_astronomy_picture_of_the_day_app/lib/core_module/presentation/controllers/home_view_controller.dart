@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/services/get_pictures_from_shared_prefs_service.dart';
+import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/ui/connection_snackbar.dart';
 import '../../error/exceptions.dart';
 import '../../domain/entities/picture_entity.dart';
 import '../../domain/services/get_pictures_from_date_service.dart';
@@ -29,6 +30,7 @@ class HomeViewController extends ChangeNotifier {
       isListLoaded.value = true;
       notifyListeners();
     } else {
+      ConnectionSnackBar("Couldn't get pictures offline. Trying to get it online").show();
       fetchData();
     }
   }
@@ -48,15 +50,19 @@ class HomeViewController extends ChangeNotifier {
   }
 
   Future fetchData() async {
-    final serviceRequest = await _getPicturesFromDateService.call(startDate: "2022-05-18");
-    final result = serviceRequest.fold((l) => l, (r) => r);
-    if (result is List<PictureEntity>) {
-      pictures.value = result;
-      isListLoaded.value = true;
-      orderList();
-      notifyListeners();
-    } else {
-      throw CoreException(StackTrace.empty, "Couldn't fetch Pictures", Exception);
+    try {
+      final serviceRequest = await _getPicturesFromDateService.call(startDate: "2022-05-18");
+      final result = serviceRequest.fold((l) => l, (r) => r);
+      if (result is List<PictureEntity>) {
+        pictures.value = result;
+        isListLoaded.value = true;
+        orderList();
+        notifyListeners();
+      } else {
+        throw CoreException(StackTrace.empty, "Couldn't fetch Pictures", Exception);
+      }
+    } catch (e) {
+      ConnectionSnackBar("Couldn't get pictures. Verify your connection and try again.").show();
     }
   }
 

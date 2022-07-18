@@ -3,11 +3,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'global_module.dart';
 
 void main() {
-  runApp(Core());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const Core());
 }
 
 class Core extends StatelessWidget {
-  Core({super.key});
+  const Core({super.key});
 
   static final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 

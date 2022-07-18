@@ -47,4 +47,23 @@ void main() {
       verifyNoMoreInteractions(gateway);
     });
   });
+
+  group('CoreRepository.getPicturesFromSharedPrefs', () {
+    test('Should return a PictureEntity List on success', () async {
+      when(() => sharedPrefs.getPicturesFromSharedPrefs()).thenAnswer((_) async => tPictureOfTheDayList);
+      final result = await repository.getPicturesFromSharedPrefs();
+      expect(result, Right(tPictureOfTheDayList));
+      verify(() => sharedPrefs.getPicturesFromSharedPrefs()).called(1);
+      verifyNoMoreInteractions(sharedPrefs);
+    });
+
+    test('Should return a GetPicturesFromSharedPrefsFailure on failure', () async {
+      when(() => sharedPrefs.getPicturesFromSharedPrefs())
+          .thenThrow(GetPicturesException(StackTrace.empty, '', Exception()));
+      final result = await repository.getPicturesFromSharedPrefs();
+      expect(result, Left(GetPicturesFromSharedPrefsFailure()));
+      verify(() => sharedPrefs.getPicturesFromSharedPrefs()).called(1);
+      verifyNoMoreInteractions(sharedPrefs);
+    });
+  });
 }

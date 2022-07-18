@@ -16,13 +16,17 @@ class PictureDetailedView extends StatelessWidget {
         appBar: AppBar(),
         body: Container(
           margin: EdgeInsets.symmetric(horizontal: Scale.width(6), vertical: Scale.width(5)),
-          decoration: BoxDecoration(color: Colors.red, borderRadius: AppBorderRadius.brAll5),
+          decoration: BoxDecoration(color: Colors.white.withOpacity(0.25), borderRadius: AppBorderRadius.brAll5),
           width: Scale.width(100),
           height: Scale.height(75),
           child: ListView(
             children: [
-              Text(picture.title),
-              Text(picture.formatDateMMMMDY()),
+              Align(
+                child: YellowBorderContainer(text: picture.title, height: Scale.width(10)),
+              ),
+              SizedBox(height: Scale.height(1)),
+              Align(child: YellowBorderContainer(text: picture.formatDateMMMMDY(), height: Scale.width(8))),
+              SizedBox(height: Scale.height(2)),
               SizedBox(
                 height: Scale.height(30),
                 child: CachedNetworkImage(
@@ -30,7 +34,8 @@ class PictureDetailedView extends StatelessWidget {
                   errorWidget: (context, url, error) => const ErrorPictureWidget(),
                 ),
               ),
-              Text(picture.explanation),
+              SizedBox(height: Scale.height(2)),
+              YellowBorderContainer(text: picture.explanation)
             ],
           ),
         ),

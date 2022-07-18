@@ -12,11 +12,10 @@ import '../../error/exceptions.dart';
 
 abstract class ICoreGateway {
   Future<List<PictureEntity>> getPicturesFromDate({required String startDate});
-  Future<PictureEntity> getPictureByDate({required String date});
 }
 
 class CoreGateway implements ICoreGateway {
-  final rootScaffoldMessengerKey = Core.rootScaffoldMessengerKey;
+  // final rootScaffoldMessengerKey = Core.rootScaffoldMessengerKey;
 
   final ICoreHttpClient _coreHttpClient;
   final ICoreSharedPreferences _coreSharedPrefs;
@@ -27,30 +26,14 @@ class CoreGateway implements ICoreGateway {
   Future<List<PictureEntity>> getPicturesFromDate({required String startDate}) async {
     try {
       Response response = await _coreHttpClient.getPicturesFromDate(startDate);
-
       if (response.statusCode != 200) {
         throw GetPicturesException(
             StackTrace.empty, '_coreHttpClient.getPicturesListFromDate', Exception("statusCode != 200"));
       }
       await _coreSharedPrefs.savePicturesToSharedPrefs(data: response.body);
-
       return List<PictureEntity>.from(json.decode(response.body).map((data) => PictureEntityMapper.fromJson(data)));
     } catch (e, stacktrace) {
-      ConnectionSnackBar("Couldn't get pictures. Verify you connection and try again.").show();
       throw GetPicturesException(stacktrace, '_coreHttpClient.getPicturesListFromDate', e);
-    }
-  }
-
-  @override
-  Future<PictureEntity> getPictureByDate({required String date}) async {
-    try {
-      Response response = await _coreHttpClient.getPictureByDate(date);
-      if (response.statusCode != 200) {
-        throw GetPictureException(StackTrace.empty, '_coreHttpClient.getPictureByDate', Exception("statusCode != 200"));
-      }
-      return PictureEntityMapper.fromJson(json.decode(response.body));
-    } catch (e, stacktrace) {
-      throw GetPictureException(stacktrace, '_coreHttpClient.getPictureOfTheDayByDate', e);
     }
   }
 }
