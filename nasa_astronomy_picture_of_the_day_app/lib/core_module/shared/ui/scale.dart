@@ -30,5 +30,4 @@ class AppFontSize {
 class AppBorderRadius {
   static BorderRadius brAll3 = BorderRadius.all(Radius.circular(Scale.width(3)));
   static BorderRadius brAll5 = BorderRadius.all(Radius.circular(Scale.width(5)));
-  static BorderRadius brVerticalBot8 = BorderRadius.vertical(bottom: Radius.circular(Scale.width(8)));
 }

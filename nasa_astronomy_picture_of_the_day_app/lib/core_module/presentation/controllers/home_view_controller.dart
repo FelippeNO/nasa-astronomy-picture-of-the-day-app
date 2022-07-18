@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/services/get_pictures_from_shared_prefs_service.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/ui/connection_snackbar.dart';
+import '../../domain/services/get_pictures_from_shared_prefs_service.dart';
+import '../../shared/ui/connection_snackbar.dart';
 import '../../error/exceptions.dart';
 import '../../domain/entities/picture_entity.dart';
 import '../../domain/services/get_pictures_from_date_service.dart';

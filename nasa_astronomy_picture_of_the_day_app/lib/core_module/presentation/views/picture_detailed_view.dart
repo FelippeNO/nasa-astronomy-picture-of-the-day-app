@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/domain/entities/picture_entity.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/presentation/views/home_view.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/ui/scale.dart';
+import '../../domain/entities/picture_entity.dart';
+import '../widgets/error_picture_widget.dart';
+import '../widgets/yellow_border_container.dart';
+import '../../shared/ui/scale.dart';
 
 class PictureDetailedView extends StatelessWidget {
   final PictureEntity picture;

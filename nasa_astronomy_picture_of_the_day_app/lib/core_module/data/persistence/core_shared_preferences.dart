@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/mappers/picture_entity_mapper.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/error/exceptions.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/shared/get_shared_preferences.dart';
+
 import '../../domain/entities/picture_entity.dart';
+import '../../error/exceptions.dart';
 import '../../error/success.dart';
+import '../../shared/get_shared_preferences.dart';
+import '../mappers/picture_entity_mapper.dart';
 
 abstract class ICoreSharedPreferences {
   Future<CoreSuccess> savePicturesToSharedPrefs({required String data});

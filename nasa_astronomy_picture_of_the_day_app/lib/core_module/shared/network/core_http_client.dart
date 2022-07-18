@@ -24,5 +24,3 @@ class CoreHttpClient implements ICoreHttpClient {
     return response;
   }
 }
-
-//https://api.nasa.gov/planetary/apod?api_key=uu8DEr43eF20KKXHvgVZQJeIwvJa5903Ny71jnOy&start_date=2022-01-01

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:nasa_astronomy_picture_of_the_day_app/core_module/data/persistence/core_shared_preferences.dart';
-
+import '../persistence/core_shared_preferences.dart';
 import '../../domain/entities/picture_entity.dart';
 import '../../domain/i_repositories/i_core_repository.dart';
 import '../../error/failures.dart';
